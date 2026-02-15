@@ -4,16 +4,16 @@ import FeaturedProducts from "../Home/FeaturedProducts";
 import ShopByBrand from "../Home/ShopByBrand";
 import HomeFooter from "../Home/HomeFooter";
 
-const HomePage = () => {
+const MainContent = () => {
   return (
-    <>
+    <div className="bg-white">
       <ImageSlider />
       <WhyBuyFromUs />
       <FeaturedProducts />
       <ShopByBrand />
       <HomeFooter />
-    </>
+    </div>
   );
 };
 
-export default HomePage;
+export default MainContent;
