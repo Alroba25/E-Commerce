@@ -8,6 +8,11 @@ import {
   Route,
 } from "react-router-dom";
 import ApplicationLayout from "./ApplicationLayout";
+import Product from "@/components/Pages/Product";
+import LoginPage from "@/components/Pages/Login";
+import RegisterPage from "@/components/Pages/Register";
+import HomeLayout from "./HomeLayout";
+import CartPage from "@/components/Pages/CartPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -15,8 +20,15 @@ const router = createBrowserRouter(
       <Route path="/" element={<ApplicationLayout />}>
         <Route index element={<HomePage />} />
         <Route path="about" element={<AboutPage />} />
-        <Route path="products" element={<ProductsPage />} />
+
+        <Route element={<HomeLayout />}>
+          <Route path="products" element={<ProductsPage />} />
+          <Route path="product" element={<Product />} />
+          <Route path="cart" element={<CartPage/>}/>
+        </Route>
       </Route>
+      <Route path="login" element={<LoginPage />} />
+      <Route path="register" element={<RegisterPage />} />
     </>,
   ),
 );

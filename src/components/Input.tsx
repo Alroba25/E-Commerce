@@ -1,11 +1,18 @@
-import type { InputHTMLAttributes } from "react";
+import { forwardRef, type InputHTMLAttributes } from "react";
+import { cn } from "@/lib/utils";
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface IProps extends InputHTMLAttributes<HTMLInputElement> {
   className?: string;
 }
 
-const Input = ({ className, ...rest }: InputProps) => {
-  return <input className={className} {...rest} />;
-};
+const Input = forwardRef<HTMLInputElement, IProps>(
+  ({ className, ...rest }, ref) => {
+    return (
+      <input ref={ref} className={cn("input-base", className)} {...rest} />
+    );
+  },
+);
+
+Input.displayName = "Input";
 
 export default Input;

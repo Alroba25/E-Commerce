@@ -63,7 +63,7 @@ const ImageSlider = () => {
       {/* Navigation Arrows */}
       <button
         onClick={prevSlide}
-        className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white p-3 rounded-full transition-all duration-300 backdrop-blur-sm z-10"
+        className="absolute left-4 top-1/2 -translate-y-1/2 bg-imperial-dark/30 hover:bg-imperial-primary text-white p-3 rounded-full transition-all duration-300 backdrop-blur-sm z-10 border border-white/10 hover:scale-110"
         aria-label="Previous slide"
       >
         <FaChevronLeft className="text-xl" />
@@ -71,22 +71,22 @@ const ImageSlider = () => {
 
       <button
         onClick={nextSlide}
-        className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white p-3 rounded-full transition-all duration-300 backdrop-blur-sm z-10"
+        className="absolute right-4 top-1/2 -translate-y-1/2 bg-imperial-dark/30 hover:bg-imperial-primary text-white p-3 rounded-full transition-all duration-300 backdrop-blur-sm z-10 border border-white/10 hover:scale-110"
         aria-label="Next slide"
       >
         <FaChevronRight className="text-xl" />
       </button>
 
       {/* Dots Indicator */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3 z-10">
         {slides.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrent(index)}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
+            className={`h-2 rounded-full transition-all duration-300 shadow-sm ${
               index === current
-                ? "bg-white w-8"
-                : "bg-white/50 hover:bg-white/75"
+                ? "bg-imperial-primary w-8"
+                : "bg-white/50 w-2 hover:bg-white"
             }`}
             aria-label={`Go to slide ${index + 1}`}
           ></button>

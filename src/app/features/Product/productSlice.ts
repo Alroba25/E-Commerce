@@ -1,4 +1,3 @@
-import type { RootState } from "@/app/store";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
@@ -21,8 +20,5 @@ export const productSlice = createSlice({
 });
 
 export const { setNavigateProductId } = productSlice.actions;
-
-export const selectCount = (state: RootState) =>
-  state.product.navigateProductId;
 
 export default productSlice.reducer;
