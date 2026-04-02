@@ -1,11 +1,16 @@
-import { useState } from "react";
+import { memo } from "react";
+import { FaDesktop } from "react-icons/fa";
 import {
-  FaMicrochip,
-  FaGamepad,
-  FaKeyboard,
-  FaCompactDisc,
-  FaDesktop,
-} from "react-icons/fa";
+  Box,
+  Flex,
+  Grid,
+  Heading,
+  Text,
+  Image,
+  Container,
+} from "@chakra-ui/react";
+import { motion } from "framer-motion";
+import { staggerContainer, fadeInUp } from "@/Utils/animations";
 
 // Category data matching the reference website
 const categories = [
@@ -17,137 +22,256 @@ const categories = [
   },
   {
     title: "VGA",
-    image: "https://placehold.co/300x200/e8e8e8/808080?text=VGA+Card",
+    image:
+      "https://tse1.mm.bing.net/th/id/OIP.EvCWuu-iEuh7ZgEf1VEQyAHaFd?rs=1&pid=ImgDetMain&o=7&rm=3",
     action: "VGA",
   },
   {
     title: "COOLING",
-    image: "https://placehold.co/300x200/e8e8e8/808080?text=Cooling+System",
+    image:
+      "https://tse3.mm.bing.net/th/id/OIF.0CcMTXHEWpzzMU1PJcrSmA?rs=1&pid=ImgDetMain&o=7&rm=3",
     action: "COOLING",
   },
   {
     title: "POWER SUPPLY",
-    image: "https://placehold.co/300x200/e8e8e8/808080?text=Power+Supply",
+    image:
+      "https://tse4.mm.bing.net/th/id/OIP.56Ld-evKLzugoyFM-vA1GgHaEK?rs=1&pid=ImgDetMain&o=7&rm=3",
     action: "POWER SUPPLY",
   },
   {
     title: "CPU",
-    image: "https://placehold.co/300x300/e8e8e8/808080?text=CPU",
+    image:
+      "https://th.bing.com/th/id/OIP.IOhqEdoZKB9uKj7So5qZ4AHaEK?o=7rm=3&rs=1&pid=ImgDetMain&o=7&rm=3",
     action: "CPU",
   },
 ];
 
-const tabs = [
-  { id: "hardware", label: "HARDWARE", icon: FaMicrochip },
-  { id: "accessories", label: "ACCESSORIES", icon: FaKeyboard },
-  { id: "software", label: "SOFTWARE", icon: FaCompactDisc },
-  { id: "console", label: "CONSOLE", icon: FaGamepad },
-];
-
 const WhyBuyFromUs = () => {
-  const [activeTab, setActiveTab] = useState("hardware");
-
   return (
-    <section className="py-16 bg-white">
-      <div className="container mx-auto px-4">
+    <Box as="section" py={16} bg="#fdfcfb">
+      <Container maxW="container.xl" px={4}>
         {/* Header */}
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-3 text-gray-900">
-            Why buy from us?
-          </h2>
-          <div className="w-16 h-1 bg-orange-500 mx-auto mb-6"></div>
-          <p className="text-gray-400 text-base max-w-3xl mx-auto">
-            With more than 10 years of experience in computer components, which
-            helps us to meet your needs in purchasing the best components at the
-            lowest prices.
-          </p>
-        </div>
-
-        {/* Tabs */}
-        <div className="flex flex-wrap justify-center gap-0 mb-12">
-          {tabs.map((tab) => {
-            const Icon = tab.icon;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-2 px-8 py-4 font-bold text-sm transition-all duration-200 ${
-                  activeTab === tab.id
-                    ? "bg-black text-white"
-                    : "bg-white text-gray-500 hover:text-gray-800"
-                }`}
-              >
-                <Icon className="text-lg" />
-                {tab.label}
-              </button>
-            );
-          })}
-        </div>
+        <Box textAlign="center" mb={12}>
+          <Heading
+            as="h2"
+            fontSize="4xl"
+            fontWeight="bold"
+            mb={3}
+            color="#1d273b"
+            letterSpacing="tight"
+          >
+            Why Shop With Us?
+          </Heading>
+          <Box
+            w={20}
+            h="6px"
+            bg="#206bc4"
+            mx="auto"
+            mb={6}
+            borderRadius="full"
+          />
+          <Text
+            color="blackAlpha.600"
+            fontSize="md"
+            maxW="3xl"
+            mx="auto"
+            fontWeight="medium"
+          >
+            Over a decade of excellence in delivering premium computer
+            components and exceptional service.
+          </Text>
+        </Box>
 
         {/* Categories Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 max-w-7xl mx-auto">
-          {categories.map((cat, index) => {
-            // Special styling for the first card (MONITORS)
-            if (index === 0) {
-              return (
-                <div
-                  key={index}
-                  className="bg-white border-2 border-blue-500 rounded-md p-6 flex flex-col items-center justify-center group hover:shadow-lg transition-all duration-300 cursor-pointer"
-                >
-                  <div className="flex flex-col items-center mb-6">
-                    <div className="w-20 h-20 border-4 border-blue-500 rounded-lg flex items-center justify-center mb-4">
-                      <FaDesktop className="text-4xl text-blue-500" />
-                    </div>
-                    <span className="text-xs font-bold text-gray-500 uppercase tracking-wide">
-                      {cat.action}
-                    </span>
-                  </div>
-                  <h3 className="text-2xl font-black text-blue-600 tracking-wide">
-                    {cat.title}
-                  </h3>
-                  <div className="w-full h-0.5 bg-gray-200 mt-4"></div>
-                </div>
-              );
-            }
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.1 }}
+        >
+          <Grid
+            templateColumns={{
+              base: "1fr",
+              sm: "repeat(2, 1fr)",
+              md: "repeat(3, 1fr)",
+              lg: "repeat(5, 1fr)",
+            }}
+            gap={5}
+            maxW="7xl"
+            mx="auto"
+          >
+            {categories.map((cat, index) => {
+              // Special styling for the first card (MONITORS)
+              if (index === 0) {
+                return (
+                  <motion.div
+                    variants={fadeInUp}
+                    key={index}
+                    style={{ height: "100%", width: "100%" }}
+                  >
+                    <Flex
+                      direction="column"
+                      align="center"
+                      justify="center"
+                      bg="white"
+                      border="2px solid"
+                      borderColor="#206bc4"
+                      borderRadius="xl"
+                      p={6}
+                      role="group"
+                      _hover={{
+                        boxShadow: "xl",
+                        transform: "translateY(-4px)",
+                      }}
+                      transition="all 0.3s"
+                      cursor="pointer"
+                    >
+                      <Flex direction="column" align="center" mb={6}>
+                        <Flex
+                          w={20}
+                          h={20}
+                          border="4px solid"
+                          borderColor="#206bc4"
+                          borderRadius="full"
+                          align="center"
+                          justify="center"
+                          mb={4}
+                          bg="#fdfcfb"
+                        >
+                          <FaDesktop fontSize="36px" color="#206bc4" />
+                        </Flex>
+                        <Text
+                          fontSize="xs"
+                          fontWeight="bold"
+                          color="blackAlpha.600"
+                          textTransform="uppercase"
+                          letterSpacing="wide"
+                        >
+                          {cat.action}
+                        </Text>
+                      </Flex>
+                      <Heading
+                        as="h3"
+                        fontSize="2xl"
+                        fontWeight="black"
+                        color="#1d273b"
+                        letterSpacing="wide"
+                        _groupHover={{ color: "#206bc4" }}
+                        transition="colors"
+                      >
+                        {cat.title}
+                      </Heading>
+                      <Box
+                        w={12}
+                        h="4px"
+                        bg="blue.100"
+                        mt={4}
+                        borderRadius="full"
+                        _groupHover={{ w: 24 }}
+                        transition="all 0.3s"
+                      />
+                    </Flex>
+                  </motion.div>
+                );
+              }
 
-            // Regular cards for other categories
-            return (
-              <div
-                key={index}
-                className="bg-white border border-gray-200 rounded-md p-4 flex flex-col items-center group hover:shadow-lg transition-all duration-300 cursor-pointer"
-              >
-                <div className="h-40 flex items-center justify-center w-full mb-4 overflow-hidden">
-                  <img
-                    src={cat.image}
-                    alt={cat.title}
-                    className="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-300"
-                  />
-                </div>
-                <h3 className="text-base font-bold text-gray-700 mb-3 text-center">
-                  {cat.title}
-                </h3>
-                <span className="text-xs font-semibold text-gray-500 uppercase">
-                  {cat.action}
-                </span>
-              </div>
-            );
-          })}
-        </div>
+              // Regular cards for other categories
+              return (
+                <motion.div
+                  variants={fadeInUp}
+                  key={index}
+                  style={{ height: "100%", width: "100%" }}
+                >
+                  <Flex
+                    key={index}
+                    direction="column"
+                    align="center"
+                    bg="white"
+                    border="1px solid"
+                    borderColor="blackAlpha.100"
+                    borderRadius="xl"
+                    p={4}
+                    role="group"
+                    _hover={{ boxShadow: "xl", borderColor: "#206bc4" }}
+                    transition="all 0.3s"
+                    cursor="pointer"
+                  >
+                    <Flex
+                      h={40}
+                      align="center"
+                      justify="center"
+                      w="full"
+                      mb={4}
+                      overflow="hidden"
+                      borderRadius="lg"
+                      bg="gray.50"
+                    >
+                      <Image
+                        src={cat.image}
+                        alt={cat.title}
+                        loading="lazy"
+                        maxH="full"
+                        maxW="full"
+                        objectFit="contain"
+                        _groupHover={{ transform: "scale(1.1)" }}
+                        transition="transform 0.5s"
+                        mixBlendMode="multiply"
+                      />
+                    </Flex>
+                    <Heading
+                      as="h3"
+                      fontSize="md"
+                      fontWeight="bold"
+                      color="#1d273b"
+                      mb={3}
+                      textAlign="center"
+                      _groupHover={{ color: "#206bc4" }}
+                      transition="colors"
+                    >
+                      {cat.title}
+                    </Heading>
+                    <Text
+                      fontSize="xs"
+                      fontWeight="bold"
+                      color="blackAlpha.400"
+                      textTransform="uppercase"
+                      letterSpacing="wider"
+                      _groupHover={{ color: "blue.400" }}
+                      transition="colors"
+                    >
+                      {cat.action}
+                    </Text>
+                  </Flex>
+                </motion.div>
+              );
+            })}
+          </Grid>
+        </motion.div>
 
         {/* Pagination Dots */}
-        <div className="flex justify-center gap-2 mt-10">
-          <button
-            className="w-2.5 h-2.5 rounded-full bg-gray-300 hover:bg-orange-500 transition-colors"
+        <Flex justify="center" gap={3} mt={12}>
+          <Box
+            as="button"
             aria-label="Page 1"
-          ></button>
-          <button
-            className="w-2.5 h-2.5 rounded-full bg-orange-500"
+            w={3}
+            h={3}
+            borderRadius="full"
+            bg="blackAlpha.200"
+            _hover={{ bg: "#206bc4" }}
+            transition="colors"
+          />
+          <Box
+            as="button"
             aria-label="Page 2"
-          ></button>
-        </div>
-      </div>
-    </section>
+            w={8}
+            h={3}
+            borderRadius="full"
+            bg="#206bc4"
+          />
+        </Flex>
+      </Container>
+    </Box>
   );
 };
 
-export default WhyBuyFromUs;
+export default memo(WhyBuyFromUs);

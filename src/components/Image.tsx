@@ -9,6 +9,7 @@ const Image = ({ src, alt, className }: IImage) => {
       <img
         src={src}
         alt={alt}
+        loading="lazy"
         className={`w-20 h-20 object-cover ${className}`}
       />
     </>

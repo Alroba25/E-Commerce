@@ -1,118 +1,332 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { FaBars, FaPhone, FaFire, FaLaptop, FaUsers } from "react-icons/fa";
+import { useState, memo } from "react";
+import { Link as RouterLink } from "react-router-dom";
+import {
+  FaBars,
+  FaPhone,
+  FaFire,
+  FaLaptop,
+  FaUsers,
+  FaDesktop,
+  FaMicrochip,
+  FaKeyboard,
+  FaTv,
+  FaHeadphones,
+  FaGamepad,
+  FaWifi,
+} from "react-icons/fa";
 import { IoMdHelpCircle } from "react-icons/io";
+import { Box, Flex, Text, Button, Container } from "@chakra-ui/react";
+
+const departments = [
+  { name: "Laptops", icon: FaLaptop },
+  { name: "Desktops", icon: FaDesktop },
+  { name: "Components", icon: FaMicrochip },
+  { name: "Peripherals", icon: FaKeyboard },
+  { name: "Monitors", icon: FaTv },
+  { name: "Accessories", icon: FaHeadphones },
+  { name: "Gaming", icon: FaGamepad },
+  { name: "Networking", icon: FaWifi },
+];
 
 const StickyNav = () => {
   const [isDepartmentsOpen, setIsDepartmentsOpen] = useState(false);
 
-  const departments = [
-    "Laptops",
-    "Desktops",
-    "Components",
-    "Peripherals",
-    "Monitors",
-    "Accessories",
-    "Gaming",
-    "Networking",
-  ];
-
   return (
-    <nav className="sticky top-0 z-50 bg-black text-white shadow-md">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-12 items-center justify-between">
+    <Box
+      as="nav"
+      position="sticky"
+      top={0}
+      zIndex={100}
+      bg="#1d273b"
+      color="white"
+      boxShadow="lg"
+      borderBottom="1px solid"
+      borderColor="whiteAlpha.200"
+    >
+      <Container maxW="container.xl" px={{ base: 4, sm: 6, lg: 8 }}>
+        <Flex h={14} align="center" justify="space-between">
           {/* Left Side - All Departments */}
-          <div className="relative">
-            <button
+          <Flex position="relative" h="full" align="center">
+            <Button
               onClick={() => setIsDepartmentsOpen(!isDepartmentsOpen)}
-              className="flex items-center gap-2 bg-yellow-500 hover:bg-yellow-600 text-black font-semibold px-4 py-2 rounded transition-colors h-12"
+              display="flex"
+              alignItems="center"
+              gap={3}
+              bg="#206bc4"
+              _hover={{
+                bg: "blue.700",
+                boxShadow: "0 0 10px rgba(32, 107, 196, 0.5)",
+              }}
+              color="white"
+              fontWeight="bold"
+              px={6}
+              h={10}
+              borderRadius="lg"
+              transition="all 0.2s"
+              boxShadow="md"
             >
-              <FaBars className="text-lg" />
-              <span className="text-sm uppercase">All Departments</span>
-            </button>
+              <FaBars fontSize="18px" />
+              <Text
+                fontSize="sm"
+                textTransform="uppercase"
+                letterSpacing="wide"
+              >
+                All Departments
+              </Text>
+            </Button>
 
             {/* Dropdown Menu */}
             {isDepartmentsOpen && (
-              <div className="absolute left-0 top-full mt-0 w-64 bg-white text-black shadow-lg rounded-b z-50">
-                <ul className="py-2">
+              <Box
+                position="absolute"
+                left={0}
+                top={14}
+                mt={2}
+                w={80}
+                bg="white"
+                color="#1d273b"
+                boxShadow="rgba(0, 0, 0, 0.15) 0px 15px 35px 0px, rgba(0, 0, 0, 0.05) 0px 5px 15px 0px"
+                borderRadius="2xl"
+                zIndex={50}
+                border="1px solid"
+                borderColor="blackAlpha.100"
+                overflow="hidden"
+                animation="fade-in 0.2s cubic-bezier(0.16, 1, 0.3, 1)"
+                transformOrigin="top left"
+              >
+                <Flex direction="column" p={2}>
                   {departments.map((dept, index) => (
-                    <li key={index}>
-                      <Link
-                        to={`/category/${dept.toLowerCase()}`}
-                        className="block px-4 py-2 hover:bg-gray-100 transition-colors text-sm"
-                        onClick={() => setIsDepartmentsOpen(false)}
+                    <RouterLink
+                      key={index}
+                      to={`/category/${dept.name}`}
+                      onClick={() => setIsDepartmentsOpen(false)}
+                    >
+                      <Flex
+                        align="center"
+                        justify="space-between"
+                        px={4}
+                        py={3}
+                        borderRadius="xl"
+                        role="group"
+                        _hover={{
+                          bg: "blue.50",
+                          color: "#206bc4",
+                          transform: "translateX(4px)",
+                        }}
+                        transition="all 0.2s"
+                        cursor="pointer"
                       >
-                        {dept}
-                      </Link>
-                    </li>
+                        <Flex align="center" gap={3}>
+                          <Box
+                            bg="gray.50"
+                            p={2}
+                            borderRadius="lg"
+                            color="blackAlpha.500"
+                            _groupHover={{
+                              bg: "white",
+                              color: "#206bc4",
+                              boxShadow: "sm",
+                            }}
+                            transition="all 0.2s"
+                          >
+                            <Box as={dept.icon} fontSize="16px" opacity={0.8} />
+                          </Box>
+                          <Text
+                            fontSize="sm"
+                            fontWeight="bold"
+                            letterSpacing="tight"
+                          >
+                            {dept.name}
+                          </Text>
+                        </Flex>
+                        <Text
+                          fontSize="xs"
+                          color="blackAlpha.300"
+                          _groupHover={{
+                            color: "#206bc4",
+                            transform: "translateX(2px)",
+                          }}
+                          transition="all 0.2s"
+                        >
+                          →
+                        </Text>
+                      </Flex>
+                    </RouterLink>
                   ))}
-                </ul>
-              </div>
+                </Flex>
+              </Box>
             )}
-          </div>
+          </Flex>
 
           {/* Center - Navigation Links */}
-          <div className="hidden md:flex items-center gap-6 h-full">
-            <Link
-              to="/powered-by"
-              className=" h-full flex items-center gap-2 text-white hover:bg-yellow-500 hover:text-black transition-colors text-sm font-medium"
-            >
-              <FaFire className="text-orange-500" />
-              <span>POWERED BY</span>
-            </Link>
+          <Flex
+            display={{ base: "none", md: "flex" }}
+            align="center"
+            gap={8}
+            h="full"
+          >
+            <RouterLink to="/powered-by">
+              <Flex
+                h="full"
+                align="center"
+                gap={2}
+                color="whiteAlpha.900"
+                _hover={{ color: "#206bc4" }}
+                transition="colors 0.2s"
+                fontSize="sm"
+                fontWeight="bold"
+                letterSpacing="wide"
+                role="group"
+              >
+                <Box
+                  color="#206bc4"
+                  _groupHover={{ transform: "scale(1.1)" }}
+                  transition="transform 0.2s"
+                >
+                  <FaFire />
+                </Box>
+                <Text>POWERED BY</Text>
+              </Flex>
+            </RouterLink>
 
-            <Link
-              to="/laptop"
-              className="h-full flex items-center gap-2 text-white hover:bg-yellow-500 hover:text-black transition-colors text-sm font-medium"
-            >
-              <FaLaptop />
-              <span>LAPTOP</span>
-            </Link>
+            <RouterLink to="/category/Laptops">
+              <Flex
+                h="full"
+                align="center"
+                gap={2}
+                color="whiteAlpha.900"
+                _hover={{ color: "#206bc4" }}
+                transition="colors 0.2s"
+                fontSize="sm"
+                fontWeight="bold"
+                letterSpacing="wide"
+                role="group"
+              >
+                <Box
+                  _groupHover={{ transform: "scale(1.1)" }}
+                  transition="transform 0.2s"
+                >
+                  <FaLaptop />
+                </Box>
+                <Text>LAPTOP</Text>
+              </Flex>
+            </RouterLink>
 
-            <Link
-              to="/elgato"
-              className="h-full flex items-center gap-2 text-white hover:bg-yellow-500 hover:text-black transition-colors text-sm font-medium"
-            >
-              <FaFire className="text-orange-500" />
-              <span>ELGATO</span>
-            </Link>
+            <RouterLink to="/elgato">
+              <Flex
+                h="full"
+                align="center"
+                gap={2}
+                color="whiteAlpha.900"
+                _hover={{ color: "#206bc4" }}
+                transition="colors 0.2s"
+                fontSize="sm"
+                fontWeight="bold"
+                letterSpacing="wide"
+                role="group"
+              >
+                <Box
+                  color="#206bc4"
+                  _groupHover={{ transform: "scale(1.1)" }}
+                  transition="transform 0.2s"
+                >
+                  <FaFire />
+                </Box>
+                <Text>ELGATO</Text>
+              </Flex>
+            </RouterLink>
 
-            <Link
-              to="/community"
-              className="h-full flex items-center gap-2 text-white hover:bg-yellow-500 hover:text-black transition-colors text-sm font-medium"
-            >
-              <FaUsers />
-              <span>COMMUNITY</span>
-            </Link>
-          </div>
+            <RouterLink to="/community">
+              <Flex
+                h="full"
+                align="center"
+                gap={2}
+                color="whiteAlpha.900"
+                _hover={{ color: "#206bc4" }}
+                transition="colors 0.2s"
+                fontSize="sm"
+                fontWeight="bold"
+                letterSpacing="wide"
+                role="group"
+              >
+                <Box
+                  _groupHover={{ transform: "scale(1.1)" }}
+                  transition="transform 0.2s"
+                >
+                  <FaUsers />
+                </Box>
+                <Text>COMMUNITY</Text>
+              </Flex>
+            </RouterLink>
+          </Flex>
 
           {/* Right Side - Phone & Help */}
-          <div className="flex items-center gap-4 h-full">
-            <a
-              href="tel:01096663742"
-              className="hidden h-full sm:flex items-center gap-2 text-white hover:bg-white hover:text-black transition-colors"
+          <Flex align="center" gap={6} h="full">
+            <Box
+              display={{ base: "none", sm: "flex" }}
+              h="full"
+              alignItems="center"
+              gap={2}
+              color="whiteAlpha.800"
+              _hover={{ color: "#206bc4" }}
+              transition="colors 0.2s"
+              role="group"
+              asChild
             >
-              <FaPhone className="text-sm" />
-              <span className="text-sm font-medium">01096663742</span>
-            </a>
+              <a href="tel:01096663742">
+                <Box
+                  fontSize="sm"
+                  _groupHover={{ transform: "rotate(12deg)" }}
+                  transition="transform 0.2s"
+                >
+                  <FaPhone />
+                </Box>
+                <Text as={"span"} fontSize="sm" fontWeight="bold">
+                  010 9666 3742
+                </Text>
+              </a>
+            </Box>
 
-            <button className="h-full flex items-center gap-2 bg-yellow-500 hover:bg-white text-black font-semibold px-4 py-2 rounded transition-colors">
-              <IoMdHelpCircle className="text-lg" />
-              <span className="text-sm uppercase">Help!</span>
-            </button>
-          </div>
-        </div>
-      </div>
+            <Button
+              h={10}
+              display="flex"
+              alignItems="center"
+              gap={2}
+              bg="#206bc4"
+              color="white"
+              _hover={{ bg: "white", color: "#1d273b" }}
+              fontWeight="bold"
+              px={5}
+              borderRadius="lg"
+              transition="all 0.2s"
+              boxShadow="md"
+            >
+              <IoMdHelpCircle fontSize="20px" />
+              <Text
+                fontSize="sm"
+                textTransform="uppercase"
+                letterSpacing="wide"
+              >
+                Help!
+              </Text>
+            </Button>
+          </Flex>
+        </Flex>
+      </Container>
 
       {/* Mobile Menu Overlay */}
       {isDepartmentsOpen && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40"
+        <Box
+          position="fixed"
+          inset={0}
+          bg="rgba(0,0,0,0.5)"
+          zIndex={40}
+          backdropFilter="blur(4px)"
           onClick={() => setIsDepartmentsOpen(false)}
         />
       )}
-    </nav>
+    </Box>
   );
 };
 
-export default StickyNav;
+export default memo(StickyNav);

@@ -1,163 +1,476 @@
+import { memo, useState } from "react";
 import { FaShoppingCart, FaExchangeAlt, FaEye } from "react-icons/fa";
-import { Link } from "react-router-dom";
-// Placeholder data
-const products = [
-  {
-    id: 1,
-    name: "ASUS PRIME X670-P ATX AM5 Motherboard",
-    category: "Asus",
-    categoryType: "PRIME X670-P",
-    price: "12,500 EGP",
-    image: "https://placehold.co/300x300/png?text=Motherboard",
-    isNew: true,
-  },
-  {
-    id: 2,
-    name: "Patriot Viper Elite 5 DDR5-6400...",
-    category: "Patriot",
-    categoryType: "VEB532G6432KW",
-    price: "23,500 EGP",
-    image: "https://placehold.co/300x300/png?text=RAM+White",
-    isNew: true,
-  },
-  {
-    id: 3,
-    name: "Acer 16GB DDR4-3200 CL22 SO-...",
-    category: "Acer",
-    categoryType: "BL.9BWWA.213",
-    price: "8,500 EGP",
-    image: "https://placehold.co/300x300/png?text=RAM+Green",
-    isNew: true,
-  },
-  {
-    id: 4,
-    name: "Patriot Viper Elite 5 Ultra RGB 32...",
-    category: "Patriot",
-    categoryType: "VEUR532G6028K",
-    price: "23,500 EGP",
-    image: "https://placehold.co/300x300/png?text=RAM+RGB",
-    isNew: true,
-  },
-];
+import { Link as RouterLink } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { getProducts } from "@/Utils";
+import { useDispatch } from "react-redux";
+import { setNavigateProductId } from "@/app/features/Product/productSlice";
+import { addToCart } from "@/app/features/Cart/cartSlice";
+import type { IProduct } from "@/Interfaces";
+import { toaster } from "../ui/toaster";
+import { staggerContainer, fadeInUp } from "@/Utils/animations";
+import { motion } from "framer-motion";
+import {
+  Box,
+  Flex,
+  Text,
+  Heading,
+  Image,
+  Button,
+  Container,
+  Grid,
+  IconButton,
+  Input,
+  Skeleton,
+  SkeletonText,
+} from "@chakra-ui/react";
 
-const FeaturedProducts = () => {
+const ProductCard = ({ product }: { product: IProduct }) => {
+  const dispatch = useDispatch();
+  const [qty, setQty] = useState(1);
+
+  const imageUrl = product.thumbnail?.url
+    ? `${import.meta.env.VITE_SERVER_BASE}${product.thumbnail.url}`
+    : "https://via.placeholder.com/300";
+
   return (
-    <section className="py-12 bg-white">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-10">
-          <h2 className="text-3xl font-bold mb-4 text-gray-800">
-            Featured Products
-          </h2>
-          <div className="w-16 h-1 bg-red-500 mx-auto mb-6"></div>
-          <p className="text-gray-500 text-sm uppercase tracking-wider">
-            Check Latest Products from Features Categories...
-          </p>
-        </div>
+    <motion.div
+      whileHover={{
+        scale: 1.03,
+        boxShadow: "0px 20px 25px -5px rgba(0, 0, 0, 0.1)",
+        transition: { duration: 0.3, ease: "easeOut" },
+      }}
+      style={{
+        height: "100%",
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      <Box
+        bg="white"
+        border="1px solid"
+        borderColor="blackAlpha.100"
+        borderRadius="2xl"
+        overflow="hidden"
+        transition="all 0.3s"
+        role="group"
+        position="relative"
+        h="full"
+        w="full"
+      >
+        {/* Badges */}
+        <Box
+          position="absolute"
+          top={4}
+          left={0}
+          bg="#206bc4"
+          color="white"
+          fontSize="10px"
+          fontWeight="black"
+          px={8}
+          py={1}
+          transform="rotate(-45deg) translateX(-28%) translateY(20%)"
+          zIndex={20}
+          w={32}
+          textAlign="center"
+          boxShadow="md"
+          textTransform="uppercase"
+          letterSpacing="widest"
+        >
+          NEW ARRIVAL
+        </Box>
 
-        {/* Filter Tabs */}
-        <div className="flex flex-wrap justify-center gap-6 mb-8 text-sm font-bold uppercase text-gray-400">
-          <button className="text-white bg-black px-4 py-2 flex items-center gap-2">
-            <span className="text-yellow-500">⚡</span> LATEST
-          </button>
-          <button className="hover:text-black hover:bg-gray-100 px-4 py-2 transition-colors flex items-center gap-2">
-            <span className="text-green-500">🏆</span> BESTSELLERS
-          </button>
-          <button className="hover:text-black hover:bg-gray-100 px-4 py-2 transition-colors flex items-center gap-2">
-            <span className="text-red-500">🔥</span> SPECIALS
-          </button>
-          <button className="hover:text-black hover:bg-gray-100 px-4 py-2 transition-colors flex items-center gap-2">
-            <span className="text-orange-500">🚚</span> COMING SOON
-          </button>
-        </div>
+        {/* Image */}
+        <Box
+          h={72}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          p={6}
+          position="relative"
+          overflow="hidden"
+          bgGradient="to-br"
+          gradientFrom="white"
+          gradientTo="#fdfcfb"
+        >
+          <Image
+            src={imageUrl}
+            alt={product.title}
+            maxH="full"
+            maxW="full"
+            objectFit="contain"
+            loading="lazy"
+            _groupHover={{ transform: "scale(1.1)" }}
+            transition="transform 0.7s ease-in-out"
+            mixBlendMode="multiply"
+          />
 
-        {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {products.map((product) => (
-            <div
-              key={product.id}
-              className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow group relative"
+          {/* Hover Actions */}
+          <Flex
+            position="absolute"
+            bottom={4}
+            left={0}
+            right={0}
+            justify="center"
+            gap={3}
+            opacity={0}
+            transform="translateY(16px)"
+            _groupHover={{ opacity: 1, transform: "translateY(0)" }}
+            transition="all 0.3s"
+            zIndex={10}
+          >
+            <IconButton
+              aria-label="Quick View"
+              h={10}
+              w={10}
+              bg="white"
+              borderRadius="full"
+              boxShadow="lg"
+              color="#1d273b"
+              _hover={{
+                bg: "#206bc4",
+                color: "white",
+                transform: "scale(1.1)",
+              }}
+              transition="all 0.2s"
             >
-              {/* Badges */}
-              {product.isNew && (
-                <div className="absolute top-0 left-0 bg-yellow-400 text-white text-xs font-bold px-3 py-1 -rotate-45 translate-x-[-25%] translate-y-[30%] z-10 w-24 text-center shadow-sm">
-                  NEW
-                </div>
-              )}
-              <div className="absolute top-2 right-2 p-1 bg-yellow-400 rounded-full z-10">
-                <span className="text-xs font-bold text-black px-1">3</span>
-              </div>
+              <FaEye />
+            </IconButton>
+            <IconButton
+              aria-label="Compare"
+              h={10}
+              w={10}
+              bg="white"
+              borderRadius="full"
+              boxShadow="lg"
+              color="#1d273b"
+              _hover={{
+                bg: "#206bc4",
+                color: "white",
+                transform: "scale(1.1)",
+              }}
+              transition="all 0.2s"
+            >
+              <FaExchangeAlt />
+            </IconButton>
+          </Flex>
+        </Box>
 
-              {/* Image */}
-              <div className="h-64 flex items-center justify-center p-4 relative overflow-hidden bg-gray-50">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-500"
-                />
+        {/* Content */}
+        <Box p={5}>
+          <Flex
+            justify="space-between"
+            fontSize="xs"
+            color="#206bc4"
+            mb={2}
+            fontWeight="bold"
+            letterSpacing="wide"
+            textTransform="uppercase"
+          >
+            <Text
+              as="span"
+              cursor="pointer"
+              _hover={{ textDecoration: "underline" }}
+            >
+              PREMIUM BRAND
+            </Text>
+            <Text as="span" color="blackAlpha.400">
+              {/* Category placeholder */}
+            </Text>
+          </Flex>
 
-                {/* Hover Actions */}
-                <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-4 group-hover:translate-y-0">
-                  <button
-                    className="bg-white p-2 text-gray-600 hover:text-red-500 hover:bg-gray-50 rounded-full shadow-md transition-colors"
-                    title="Quick View"
-                  >
-                    <FaEye />
-                  </button>
-                  <button
-                    className="bg-white p-2 text-gray-600 hover:text-red-500 hover:bg-gray-50 rounded-full shadow-md transition-colors"
-                    title="Compare"
-                  >
-                    <FaExchangeAlt />
-                  </button>
-                </div>
-              </div>
+          <RouterLink
+            to="/product"
+            onClick={() => dispatch(setNavigateProductId(product.documentId))}
+            style={{ display: "block" }}
+          >
+            <Heading
+              as="h3"
+              fontWeight="bold"
+              color="#1d273b"
+              fontSize="lg"
+              mb={3}
+              h={14}
+              overflow="hidden"
+              textOverflow="ellipsis"
+              lineClamp={2}
+              _hover={{ color: "#206bc4" }}
+              cursor="pointer"
+              transition="colors 0.2s"
+              lineHeight="tight"
+            >
+              {product.title}
+            </Heading>
+          </RouterLink>
 
-              {/* Content */}
-              <div className="p-4">
-                <div className="flex justify-between text-xs text-blue-400 mb-2">
-                  <span className="underline cursor-pointer hover:text-blue-600">
-                    {product.category}
-                  </span>
-                  <span className="text-gray-400">{product.categoryType}</span>
-                </div>
+          <Box
+            color="#1d273b"
+            fontSize="xl"
+            fontWeight="bold"
+            mb={4}
+            fontFamily="mono"
+          >
+            ${product.price?.toLocaleString()}
+          </Box>
 
-                <h3 className="font-bold text-gray-800 text-sm mb-3 h-10 overflow-hidden text-ellipsis line-clamp-2 hover:text-blue-600 cursor-pointer transition-colors">
-                  {product.name}
-                </h3>
-
-                <div className="text-gray-900 font-bold mb-4">
-                  {product.price}
-                </div>
-
-                <div className="flex gap-2">
-                  <div className="border border-gray-300 rounded flex items-center px-2 py-1 flex-1">
-                    <input
-                      type="number"
-                      min="1"
-                      defaultValue="1"
-                      className="w-full outline-none text-center text-sm"
-                    />
-                  </div>
-                  <button className="flex-3 bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded text-sm flex items-center justify-center gap-2 transition-colors">
-                    <FaShoppingCart />
-                    ADD TO CART
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="text-center mt-10">
-          <Link to="/products">
-            <button className="bg-black text-white px-8 py-3 text-sm font-bold hover:bg-gray-800 transition-colors">
-              SEE ALL PRODUCTS →
-            </button>
-          </Link>
-        </div>
-      </div>
-    </section>
+          <Flex gap={3}>
+            <Flex
+              border="1px solid"
+              borderColor="blackAlpha.200"
+              borderRadius="lg"
+              align="center"
+              px={1}
+              w={16}
+              bg="gray.50"
+            >
+              <Input
+                type="number"
+                min={1}
+                value={qty}
+                onChange={(e) => setQty(Number(e.target.value) || 1)}
+                w="full"
+                outline="none"
+                textAlign="center"
+                fontSize="sm"
+                bg="transparent"
+                fontWeight="medium"
+                color="#1d273b"
+                border="none"
+                _focus={{ ring: 0 }}
+              />
+            </Flex>
+            <Button
+              flex={1}
+              bg="#206bc4"
+              _hover={{ bg: "blue.700", boxShadow: "lg" }}
+              color="white"
+              fontWeight="bold"
+              py={2.5}
+              px={4}
+              borderRadius="lg"
+              fontSize="sm"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              gap={2}
+              transition="all 0.2s"
+              boxShadow="md"
+              onClick={() => {
+                for (let i = 0; i < qty; i++) {
+                  dispatch(addToCart(product));
+                }
+                toaster.create({
+                  title: `Added ${qty} item${qty > 1 ? "s" : ""} to Cart`,
+                  type: "success",
+                });
+                setQty(1);
+              }}
+            >
+              <FaShoppingCart />
+              ADD
+            </Button>
+          </Flex>
+        </Box>
+      </Box>
+    </motion.div>
   );
 };
 
-export default FeaturedProducts;
+const FeaturedProducts = () => {
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["featured-products"],
+    queryFn: () => getProducts({}),
+  });
+
+  return (
+    <Box as="section" py={12} bg="white">
+      <Container maxW="container.xl" px={4}>
+        <Box textAlign="center" mb={10}>
+          <Heading
+            as="h2"
+            fontSize="4xl"
+            fontWeight="bold"
+            mb={4}
+            color="#1d273b"
+            letterSpacing="tight"
+          >
+            Featured Collection
+          </Heading>
+          <Box
+            w={24}
+            h="6px"
+            bg="#206bc4"
+            mx="auto"
+            mb={6}
+            borderRadius="full"
+          />
+          <Text
+            color="blackAlpha.600"
+            fontSize="sm"
+            textTransform="uppercase"
+            letterSpacing="widest"
+            fontWeight="semibold"
+          >
+            Curated Selections Just For You
+          </Text>
+        </Box>
+
+        {/* Filter Tabs */}
+        <Flex
+          wrap="wrap"
+          justify="center"
+          gap={4}
+          mb={12}
+          fontSize="sm"
+          fontWeight="bold"
+          textTransform="uppercase"
+          letterSpacing="wider"
+        >
+          <Button
+            bg="#1d273b"
+            color="white"
+            px={6}
+            py={6}
+            borderRadius="full"
+            boxShadow="0 10px 15px -3px rgba(29,39,59,0.2)"
+            _hover={{ transform: "translateY(-4px)" }}
+            transition="all 0.3s"
+          >
+            <Text as="span" color="#206bc4" mr={2}>
+              ⚡
+            </Text>{" "}
+            LATEST
+          </Button>
+          <Button
+            bg="white"
+            color="#1d273b"
+            border="1px solid"
+            borderColor="blackAlpha.100"
+            _hover={{ bg: "#fdfcfb", color: "#206bc4", boxShadow: "md" }}
+            px={6}
+            py={6}
+            borderRadius="full"
+            transition="all 0.3s"
+          >
+            <Text as="span" color="green.600" mr={2}>
+              🏆
+            </Text>{" "}
+            BESTSELLERS
+          </Button>
+          <Button
+            bg="white"
+            color="#1d273b"
+            border="1px solid"
+            borderColor="blackAlpha.100"
+            _hover={{ bg: "#fdfcfb", color: "#206bc4", boxShadow: "md" }}
+            px={6}
+            py={6}
+            borderRadius="full"
+            transition="all 0.3s"
+          >
+            <Text as="span" color="red.500" mr={2}>
+              🔥
+            </Text>{" "}
+            SPECIALS
+          </Button>
+          <Button
+            bg="white"
+            color="#1d273b"
+            border="1px solid"
+            borderColor="blackAlpha.100"
+            _hover={{ bg: "#fdfcfb", color: "#206bc4", boxShadow: "md" }}
+            px={6}
+            py={6}
+            borderRadius="full"
+            transition="all 0.3s"
+          >
+            <Text as="span" color="orange.500" mr={2}>
+              🚚
+            </Text>{" "}
+            COMING SOON
+          </Button>
+        </Flex>
+
+        {/* Products Grid */}
+        {isLoading ? (
+          <Grid
+            templateColumns={{
+              base: "1fr",
+              sm: "repeat(2, 1fr)",
+              lg: "repeat(4, 1fr)",
+            }}
+            gap={8}
+          >
+            {[...Array(4)].map((_, i) => (
+              <Box
+                key={i}
+                bg="white"
+                borderRadius="2xl"
+                p={4}
+                boxShadow="sm"
+                border="1px solid"
+                borderColor="blackAlpha.100"
+              >
+                <Skeleton height="288px" borderRadius="lg" mb={4} />
+                <SkeletonText noOfLines={3} />
+              </Box>
+            ))}
+          </Grid>
+        ) : error ? (
+          <Box textAlign="center" py={12} color="red.500">
+            Failed to load featured products.
+          </Box>
+        ) : (
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.1 }}
+          >
+            <Grid
+              templateColumns={{
+                base: "1fr",
+                sm: "repeat(2, 1fr)",
+                lg: "repeat(4, 1fr)",
+              }}
+              gap={8}
+            >
+              {data?.data?.slice(0, 4).map((product: IProduct) => (
+                <motion.div variants={fadeInUp} key={product.id}>
+                  <ProductCard product={product} />
+                </motion.div>
+              ))}
+            </Grid>
+          </motion.div>
+        )}
+
+        <Box textAlign="center" mt={16}>
+          <RouterLink to="/products">
+            <Button
+              bg="#1d273b"
+              color="white"
+              px={10}
+              py={6}
+              fontSize="sm"
+              fontWeight="bold"
+              letterSpacing="widest"
+              _hover={{
+                bg: "#206bc4",
+                boxShadow: "2xl",
+                transform: "translateY(-4px)",
+              }}
+              transition="all 0.3s"
+              borderRadius="full"
+              boxShadow="xl"
+            >
+              VIEW FULL COLLECTION →
+            </Button>
+          </RouterLink>
+        </Box>
+      </Container>
+    </Box>
+  );
+};
+
+export default memo(FeaturedProducts);

@@ -3,5 +3,16 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import tsconfigPaths from "vite-tsconfig-paths"
 export default defineConfig({
-  plugins: [react(), tailwindcss() , tsconfigPaths()],
+  plugins: [react(), tailwindcss(), tsconfigPaths()],
+  build: {
+    sourcemap: false,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-router-dom'],
+          ui: ['@chakra-ui/react', '@emotion/react'],
+        },
+      },
+    },
+  },
 });
