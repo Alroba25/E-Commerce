@@ -2,9 +2,16 @@
 
 @theme {
   --color-imperial-bg: #fff8e7;
+<<<<<<< HEAD
   --color-imperial-dark: #7a4a00;
   --color-brand-primary: #206bc4;
   --color-brand-hover: #1a5bb0;
+=======
+  --color-imperial-accent: #ffd77a;
+  --color-imperial-primary: #e6a520;
+  --color-imperial-dark: #7a4a00;
+  --color-imperial-hover: #d99510; /* Slightly darker gold for hover */
+>>>>>>> 2148c4f751ba7c58f9135aafa612f04fc058df7c
   --font-display:
     "Your Font", system-ui, sans-serif; /* Placeholder if needed */
 }
@@ -34,16 +41,28 @@ body {
   background: var(--color-imperial-bg);
 }
 ::-webkit-scrollbar-thumb {
+<<<<<<< HEAD
   background: var(--color-brand-primary);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-brand-hover);
+=======
+  background: var(--color-imperial-accent);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-imperial-primary);
+>>>>>>> 2148c4f751ba7c58f9135aafa612f04fc058df7c
 }
 
 @layer components {
   .input-base {
+<<<<<<< HEAD
     @apply w-full rounded-xl border border-gray-200 bg-white px-4 py-3.5 text-sm text-gray-700 placeholder:text-gray-400 focus:border-brand-primary focus:outline-none focus:ring-2 focus:ring-brand-primary/20 transition-all duration-200 shadow-sm hover:border-brand-primary/50;
+=======
+    @apply w-full rounded-xl border border-gray-200 bg-white px-4 py-3.5 text-sm text-imperial-dark placeholder:text-gray-400 focus:border-imperial-primary focus:outline-none focus:ring-2 focus:ring-imperial-primary/20 transition-all duration-200 shadow-sm hover:border-imperial-primary/50;
+>>>>>>> 2148c4f751ba7c58f9135aafa612f04fc058df7c
   }
 
   .input-wrapper {
@@ -59,6 +78,10 @@ body {
   }
 
   .input-wrapper:focus-within .input-icon {
+<<<<<<< HEAD
     @apply text-brand-primary;
+=======
+    @apply text-imperial-primary;
+>>>>>>> 2148c4f751ba7c58f9135aafa612f04fc058df7c
   }
 }

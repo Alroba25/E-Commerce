@@ -4,6 +4,7 @@ import {
   createRoutesFromElements,
   Route,
 } from "react-router-dom";
+<<<<<<< HEAD
 import ProtectedRoute from "../components/Auth/ProtectedRoute";
 import { Center, Spinner } from "@chakra-ui/react";
 
@@ -41,10 +42,19 @@ const LoadingFallback = () => (
     <Spinner size="xl" color="brand.500" />
   </Center>
 );
+=======
+import ApplicationLayout from "./ApplicationLayout";
+import Product from "@/components/Pages/Product";
+import LoginPage from "@/components/Pages/Login";
+import RegisterPage from "@/components/Pages/Register";
+import HomeLayout from "./HomeLayout";
+import CartPage from "@/components/Pages/CartPage";
+>>>>>>> 2148c4f751ba7c58f9135aafa612f04fc058df7c
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
+<<<<<<< HEAD
       <Route
         path="/"
         element={
@@ -194,6 +204,20 @@ const router = createBrowserRouter(
           </Suspense>
         }
       />
+=======
+      <Route path="/" element={<ApplicationLayout />}>
+        <Route index element={<HomePage />} />
+        <Route path="about" element={<AboutPage />} />
+
+        <Route element={<HomeLayout />}>
+          <Route path="products" element={<ProductsPage />} />
+          <Route path="product" element={<Product />} />
+          <Route path="cart" element={<CartPage/>}/>
+        </Route>
+      </Route>
+      <Route path="login" element={<LoginPage />} />
+      <Route path="register" element={<RegisterPage />} />
+>>>>>>> 2148c4f751ba7c58f9135aafa612f04fc058df7c
     </>,
   ),
 );

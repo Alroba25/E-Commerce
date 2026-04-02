@@ -5,12 +5,15 @@ export const registerSchema = yup
       .string()
       .required("Username is required")
       .min(5, "Username should be at least 5 charachters"),
+<<<<<<< HEAD
     firstName: yup.string().required("First name is required"),
     lastName: yup.string().required("Last name is required"),
     phoneNumber: yup
       .string()
       .required("Phone number is required")
       .min(8, "Phone number should be at least 8 characters"),
+=======
+>>>>>>> 2148c4f751ba7c58f9135aafa612f04fc058df7c
     email: yup
       .string()
       .required("Email is required")
@@ -33,6 +36,7 @@ export const loginSchema = yup
       .min(6, "Password should be at least 6 charachters."),
   })
   .required();
+<<<<<<< HEAD
 
 export const productSchema = yup
   .object({
@@ -108,3 +112,5 @@ export const checkoutSchema = yup
     zipCode: yup.string().required("Zip Code is required"),
   })
   .required();
+=======
+>>>>>>> 2148c4f751ba7c58f9135aafa612f04fc058df7c
