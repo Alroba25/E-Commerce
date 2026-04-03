@@ -1,0 +1,9 @@
+src/app/features/Cart/cartSlice.ts
+src/app/features/Product/productSlice.ts
+src/app/store.ts
+src/components/ImageSlider.tsx
+src/components/Pages/CartPage.tsx
+src/components/Pages/Login.tsx
+src/components/Pages/Product.tsx
+src/components/Pages/ProductsPage.tsx
+src/components/Pages/Register.tsx

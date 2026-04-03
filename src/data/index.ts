@@ -1,13 +1,8 @@
-<<<<<<< HEAD
 import {
   type IAddProductForm,
   type IFormInput,
-  type IProfile,
   type IProfileForm,
 } from "../Interfaces";
-=======
-import { type IFormInput } from "../Interfaces";
->>>>>>> 2148c4f751ba7c58f9135aafa612f04fc058df7c
 
 export const LOGIN_FORM: IFormInput[] = [
   {
@@ -41,7 +36,6 @@ export const REGISTER_FORM: IFormInput[] = [
     },
   },
   {
-<<<<<<< HEAD
     name: "firstName",
     placeholder: "First Name",
     type: "text",
@@ -58,8 +52,6 @@ export const REGISTER_FORM: IFormInput[] = [
     },
   },
   {
-=======
->>>>>>> 2148c4f751ba7c58f9135aafa612f04fc058df7c
     name: "email",
     placeholder: "Email Address",
     type: "email",
@@ -69,7 +61,6 @@ export const REGISTER_FORM: IFormInput[] = [
     },
   },
   {
-<<<<<<< HEAD
     name: "phoneNumber",
     placeholder: "Phone Number",
     type: "text",
@@ -79,8 +70,6 @@ export const REGISTER_FORM: IFormInput[] = [
     },
   },
   {
-=======
->>>>>>> 2148c4f751ba7c58f9135aafa612f04fc058df7c
     name: "password",
     placeholder: "Password",
     type: "password",
@@ -90,7 +79,6 @@ export const REGISTER_FORM: IFormInput[] = [
     },
   },
 ];
-<<<<<<< HEAD
 export const ADD_PRODUCT_FORM: IAddProductForm[] = [
   {
     name: "title",
@@ -140,5 +128,3 @@ export const UPDATE_PROFILE_FORM: IProfileForm[] = [
     type: "text",
   },
 ];
-=======
->>>>>>> 2148c4f751ba7c58f9135aafa612f04fc058df7c

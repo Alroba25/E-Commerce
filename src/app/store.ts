@@ -2,7 +2,6 @@ import { configureStore } from "@reduxjs/toolkit";
 import productReducer from "./features/Product/productSlice";
 import loginReducer from "./features/Login/loginSlice";
 import cartSlice from "./features/Cart/cartSlice";
-<<<<<<< HEAD
 import profileReducer from "./features/Profile";
 import {
   persistStore,
@@ -14,9 +13,6 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
-=======
-import { persistStore, persistReducer } from "redux-persist";
->>>>>>> 2148c4f751ba7c58f9135aafa612f04fc058df7c
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 const persistCartConfig = {
   key: "cart",
@@ -28,10 +24,7 @@ export const store = configureStore({
     product: productReducer,
     login: loginReducer,
     cart: persistedReducer,
-<<<<<<< HEAD
     profile: profileReducer,
-=======
->>>>>>> 2148c4f751ba7c58f9135aafa612f04fc058df7c
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

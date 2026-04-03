@@ -6,7 +6,6 @@ export interface IProduct {
   documentId: string;
   price: number;
   quantity?: number;
-<<<<<<< HEAD
   stock: number;
 }
 export interface IAddProduct {
@@ -16,10 +15,6 @@ export interface IAddProduct {
   price: number;
   stock: number;
 }
-=======
-}
-
->>>>>>> 2148c4f751ba7c58f9135aafa612f04fc058df7c
 export interface IFormInput {
   name: string;
   placeholder: string;
@@ -30,21 +25,16 @@ export interface IFormInput {
     pattern?: RegExp;
   };
 }
-<<<<<<< HEAD
 export interface IAddProductForm {
   name: string;
   placeholder: string;
   type: string;
 }
-=======
-
->>>>>>> 2148c4f751ba7c58f9135aafa612f04fc058df7c
 export interface IErrorResponse {
   error: {
     message?: string;
   };
 }
-<<<<<<< HEAD
 export interface IProfile {
   firstName: string;
   lastName: string;
@@ -69,5 +59,3 @@ export interface IOrder {
     email: string;
   };
 }
-=======
->>>>>>> 2148c4f751ba7c58f9135aafa612f04fc058df7c

@@ -73,7 +73,6 @@ export const getAdminProducts = async () => {
 
   return response.data.data;
 };
-<<<<<<< HEAD
 export const deleteProduct = async (documentId: string) => {
   const token = localStorage.getItem("jwt") || getCookie("jwt");
   const response = await axiosConfig.delete(`/api/products/${documentId}`, {
@@ -83,15 +82,6 @@ export const deleteProduct = async (documentId: string) => {
   });
 
   return response.data;
-=======
-
-export const getOneProduct = async (url: string) => {
-  const response = await axiosConfig.get(
-    `/api/products/${url}?populate=thumbnail`,
-  );
-
-  return response.data.data;
->>>>>>> 2148c4f751ba7c58f9135aafa612f04fc058df7c
 };
 export const loginHandelar = async (identifier: string, password: string) => {
   const response = await axiosConfig.post(`/api/auth/local`, {
@@ -101,7 +91,6 @@ export const loginHandelar = async (identifier: string, password: string) => {
 
   return response.data;
 };
-<<<<<<< HEAD
 export const registerHandelar = async (data: any) => {
   const response = await axiosConfig.post(`/api/auth/local/register`, data);
 
@@ -172,12 +161,6 @@ export const getOrdersAdmin = async () => {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-=======
-export const registerHandelar = async (identifier: string, password: string) => {
-  const response = await axiosConfig.post(`/api/auth/local/register`, {
-    identifier,
-    password,
->>>>>>> 2148c4f751ba7c58f9135aafa612f04fc058df7c
   });
 
   return response.data;

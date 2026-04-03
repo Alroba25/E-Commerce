@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "@/app/store";
 import { Link as RouterLink } from "react-router-dom";
@@ -434,14 +433,3 @@ const CartPage = () => {
 };
 
 export default CartPage;
-=======
-const CartPage = () => {
-    return ( 
-        <>
-        
-        </>
-     );
-}
- 
-export default CartPage;
->>>>>>> 2148c4f751ba7c58f9135aafa612f04fc058df7c

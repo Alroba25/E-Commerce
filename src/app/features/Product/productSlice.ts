@@ -60,7 +60,6 @@ export const productSlice = createSlice({
   },
 });
 
-<<<<<<< HEAD
 export const {
   setNavigateProductId,
   setDeleteProductData,
@@ -68,8 +67,5 @@ export const {
   setEditProductData,
   setEditProductId,
 } = productSlice.actions;
-=======
-export const { setNavigateProductId } = productSlice.actions;
->>>>>>> 2148c4f751ba7c58f9135aafa612f04fc058df7c
 
 export default productSlice.reducer;

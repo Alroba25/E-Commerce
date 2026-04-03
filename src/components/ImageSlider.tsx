@@ -34,7 +34,6 @@ const ImageSlider = () => {
   const [swiperInstance, setSwiperInstance] = useState<any>(null);
 
   return (
-<<<<<<< HEAD
     <Box
       position="relative"
       w="full"
@@ -85,56 +84,6 @@ const ImageSlider = () => {
               objectFit="cover"
             />
           </SwiperSlide>
-=======
-    <div className="relative w-full h-[500px] overflow-hidden bg-black">
-      {/* Slides */}
-      {slides.map((slide, index) => (
-        <div
-          key={index}
-          className={`absolute inset-0 transition-opacity duration-1000 ${
-            index === current ? "opacity-100" : "opacity-0"
-          }`}
-        >
-          {/* Background Image */}
-          <img
-            src={slide.image}
-            alt={slide.title}
-            className="w-full h-full object-cover"
-          />
-        </div>
-      ))}
-
-      {/* Navigation Arrows */}
-      <button
-        onClick={prevSlide}
-        className="absolute left-4 top-1/2 -translate-y-1/2 bg-imperial-dark/30 hover:bg-imperial-primary text-white p-3 rounded-full transition-all duration-300 backdrop-blur-sm z-10 border border-white/10 hover:scale-110"
-        aria-label="Previous slide"
-      >
-        <FaChevronLeft className="text-xl" />
-      </button>
-
-      <button
-        onClick={nextSlide}
-        className="absolute right-4 top-1/2 -translate-y-1/2 bg-imperial-dark/30 hover:bg-imperial-primary text-white p-3 rounded-full transition-all duration-300 backdrop-blur-sm z-10 border border-white/10 hover:scale-110"
-        aria-label="Next slide"
-      >
-        <FaChevronRight className="text-xl" />
-      </button>
-
-      {/* Dots Indicator */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3 z-10">
-        {slides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrent(index)}
-            className={`h-2 rounded-full transition-all duration-300 shadow-sm ${
-              index === current
-                ? "bg-imperial-primary w-8"
-                : "bg-white/50 w-2 hover:bg-white"
-            }`}
-            aria-label={`Go to slide ${index + 1}`}
-          ></button>
->>>>>>> 2148c4f751ba7c58f9135aafa612f04fc058df7c
         ))}
       </Swiper>
 
